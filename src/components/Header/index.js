@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+
 import { Container, Cart } from './styles';
 import logo from '../../assets/logo.svg';
 import { Link } from 'react-router-dom';
