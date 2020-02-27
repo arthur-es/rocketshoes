@@ -2,7 +2,7 @@ import produce from 'immer';
 
 export default function cart(prevState = [], action) {
   switch (action.type) {
-    case 'ADD_TO_CART':
+    case '@cart/ADD':
       return produce(prevState, draft => {
         const productIndex = draft.findIndex(p => p.id === action.product.id);
 
@@ -15,7 +15,8 @@ export default function cart(prevState = [], action) {
           });
         }
       });
-    case 'REMOVE_FROM_CART':
+
+    case '@cart/REMOVE':
       return produce(prevState, draft => {
         const productIndex = draft.findIndex(p => p.id === action.id);
 
@@ -23,6 +24,21 @@ export default function cart(prevState = [], action) {
           draft.splice(productIndex, 1);
         }
       });
+
+    case '@cart/UPDATE_AMOUNT': {
+      if (action.amount <= 0) {
+        return prevState;
+      }
+
+      return produce(prevState, draft => {
+        const productIndex = draft.findIndex(p => p.id === action.id);
+
+        if (productIndex >= 0) {
+          draft[productIndex].amount = Number(action.amount);
+        }
+      });
+    }
+
     default:
       return prevState;
   }
