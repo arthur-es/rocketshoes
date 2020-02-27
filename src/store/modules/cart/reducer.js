@@ -1,7 +1,13 @@
 export default function cart(prevState = [], action) {
   switch (action.type) {
     case 'ADD_TO_CART':
-      return [...prevState, action.product];
+      return [
+        ...prevState,
+        {
+          ...action.product,
+          amount: 1,
+        },
+      ];
     default:
       return prevState;
   }
